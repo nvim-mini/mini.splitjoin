@@ -1,10 +1,7 @@
 --- *mini.splitjoin* Split and join arguments
---- *MiniSplitjoin*
 ---
 --- MIT License Copyright (c) 2023 Evgeni Chasnovski
----
---- ==============================================================================
----
+
 --- Features:
 --- - Mappings and Lua functions that modify arguments (regions inside brackets
 ---   between allowed separators) under cursor.
@@ -61,15 +58,15 @@
 ---
 --- # Comparisons ~
 ---
---- - 'FooSoft/vim-argwrap':
+--- - [FooSoft/vim-argwrap](https://github.com/FooSoft/vim-argwrap):
 ---     - Mostly has the same design as this module.
 ---     - Doesn't work inside comments, while this module does.
 ---     - Has more built-in ways to control split and join, while this module
 ---       intentionally provides only handful.
---- - 'AndrewRadev/splitjoin.vim':
+--- - [AndrewRadev/splitjoin.vim](https://github.com/AndrewRadev/splitjoin.vim):
 ---     - More oriented towards language-depended transformations, while this
 ---       module intntionally deals with more generic text-related functionality.
---- - 'Wansmer/treesj':
+--- - [Wansmer/treesj](https://github.com/Wansmer/treesj):
 ---     - Operates based on tree-sitter nodes. This is more accurate in
 ---       some edge cases, but **requires** tree-sitter parser.
 ---     - Doesn't work inside comments or strings.
@@ -81,12 +78,15 @@
 --- and customization intentions, writing exact rules for disabling module's
 --- functionality is left to user. See |mini.nvim-disabling-recipes| for common
 --- recipes.
+---@tag MiniSplitjoin
 
---- - POSITION - table with fields <line> and <col> containing line and column
----   numbers respectively. Both are 1-indexed. Example: `{ line = 2, col = 1 }`.
+--- POSITION ~
+--- Table with fields <line> and <col> containing line and column numbers
+--- respectively. Both are 1-indexed. Example: `{ line = 2, col = 1 }`.
 ---
---- - REGION - table representing region in a buffer. Fields: <from> and <to> for
----   inclusive start and end positions. Example: >lua
+--- REGION ~
+--- Table representing region in a buffer. Fields: <from> and <to> for
+--- inclusive start and end positions. Example: >lua
 ---
 ---   { from = { line = 1, col = 1 }, to = { line = 2, col = 1 } }
 --- <
@@ -136,12 +136,10 @@ MiniSplitjoin.setup = function(config)
   H.apply_config(config)
 end
 
---- Module config
----
---- Default values:
+--- Defaults ~
 ---@eval return MiniDoc.afterlines_to_code(MiniDoc.current.eval_section)
----@text                                                    *MiniSplitjoin.config.detect*
---- # Detection ~
+---@text # Detection ~
+--- *MiniSplitjoin.config.detect*
 ---
 --- The table at `config.detect` controls how arguments are detected using Lua
 --- patterns. General idea is to convert whole buffer into a single line,
@@ -576,7 +574,7 @@ end
 ---   same indent as current one (see |MiniSplitjoin.get_indent_part()|).
 ---   Also remove trailing whitespace at position line.
 ---
---- - Increase indent of inner lines by a single pad: tab in case of |noexpandtab|
+--- - Increase indent of inner lines by a single pad: tab in case of |'noexpandtab'|
 ---   or |shiftwidth()| number of spaces otherwise.
 ---
 --- Notes:
@@ -659,12 +657,12 @@ end
 
 --- Get previous visual region
 ---
---- Get previous visual selection using |`<| and |`>| marks in the format of
+--- Get previous visual selection using |'<| and |'>| marks in the format of
 --- region (see |MiniSplitjoin-glossary|). Used in Visual mode mappings.
 ---
 --- Note:
---- - Both marks are included in region, so for better
---- - In linewise Visual mode
+--- - Both marks are included in region.
+--- - In linewise mode start is at column 1 and end is at line's last character.
 ---
 ---@return table A region. See |MiniSplitjoin-glossary| for exact structure.
 MiniSplitjoin.get_visual_region = function()
